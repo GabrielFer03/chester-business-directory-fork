@@ -1,14 +1,14 @@
 let businesses = [];
-let activeCategory = 'All';
+let activeCategory = 'Todos';
 
 async function init() {
   const resp = await fetch('data/businesses.json');
   businesses = await resp.json();
-  const cats = ['All', ...new Set(businesses.map(b => b.category))];
+  const cats = ['Todos', ...new Set(businesses.map(b => b.category))];
   const catEl = document.getElementById('categories');
   cats.forEach(c => {
     const btn = document.createElement('button');
-    btn.className = 'cat-btn' + (c === 'All' ? ' active' : '');
+    btn.className = 'cat-btn' + (c === 'Todos' ? ' active' : '');
     btn.textContent = c;
     btn.onclick = () => filterCategory(c);
     catEl.appendChild(btn);
@@ -25,7 +25,7 @@ function filterCategory(cat) {
 function renderList() {
   const q = document.getElementById('search').value.toLowerCase();
   const filtered = businesses.filter(b => {
-    const matchCat = activeCategory === 'All' || b.category === activeCategory;
+    const matchCat = activeCategory === 'Todos' || b.category === activeCategory;
     const matchSearch = b.name.toLowerCase().includes(q) || b.description.toLowerCase().includes(q);
     return matchCat && matchSearch;
   });
@@ -49,7 +49,7 @@ function showDetail(i) {
     <div class="detail">📍 ${b.address}</div>
     <div class="detail">📞 ${b.phone}</div>
     <div class="detail">🌐 <a href="${b.website}" target="_blank">${b.website}</a></div>
-    <div class="map-placeholder">📍 Map — integrate Google Maps or Leaflet here</div>
+    <div class="map-placeholder">📍 Mapa — integre o Google Maps ou Leaflet aqui</div>
   `;
   document.getElementById('modal').classList.add('active');
 }
