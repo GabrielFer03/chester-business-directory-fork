@@ -30,13 +30,18 @@ function renderList() {
     return matchCat && matchSearch;
   });
   const grid = document.getElementById('grid');
-  grid.innerHTML = filtered.map((b, i) => `
-    <div class="card" onclick="showDetail(${businesses.indexOf(b)})">
+  document.getElementById('resultCount').textContent =
+    `${filtered.length} ${filtered.length === 1 ? 'negócio encontrado' : 'negócios encontrados'}`;
+  grid.innerHTML = filtered.length
+    ? filtered.map(b => `
+    <div class="card" role="button" tabindex="0" onclick="showDetail(${businesses.indexOf(b)})"
+      onkeydown="if (event.key === 'Enter' || event.key === ' ') showDetail(${businesses.indexOf(b)})">
       <h3>${b.name}</h3>
       <div class="cat">${b.category}</div>
       <p>${b.description}</p>
     </div>
-  `).join('');
+  `).join('')
+    : '<p class="empty-state">Nenhum negócio corresponde à sua pesquisa.</p>';
 }
 
 function showDetail(i) {
